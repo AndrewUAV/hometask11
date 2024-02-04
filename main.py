@@ -62,17 +62,18 @@ class Phone(Field):
             self.__value = value
         else:
             raise ValueError
+
     def __repr__(self):
         return f'{self.value}'
 
 
 class Record:
-    def __init__(self, name, phone = None, birthday = None):
+    def __init__(self, name, phone=None, birthday=None):
         self.name = Name(name)
         self.phones = []
-        self.birthday = birthday
-        if phone != None:
-            self.phones.append(phone)
+        self.birthday = Birthday(birthday) if birthday else None
+        if phone is not None:
+            self.phones.append(Phone(phone))
 
     def days_to_birthday(self, current_date=None):
         if not current_date:
@@ -105,9 +106,8 @@ class Record:
                 i.value = new_phone
                 return f'Number {old_phone} from {self.name}`s list changed to {new_phone}'
             else:
-                raise ValueError
+                raise ValueError(f'phone {old_phone} is not find for name {self.name}')
         return f'Number {old_phone} is not exist in {self.name} list'
-
 
     def find_phone(self, phone):
         for p in self.phones:
@@ -169,7 +169,6 @@ def is_valid_phone(phone):
         return True
     else:
         return False
-        
 @input_error
 def is_valid_birthday(value):
     pattern = '\d{2}\.\d{2}\.\d{4}'

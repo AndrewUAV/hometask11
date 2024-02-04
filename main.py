@@ -169,6 +169,7 @@ def is_valid_phone(phone):
         return True
     else:
         return False
+        
 @input_error
 def is_valid_birthday(value):
     pattern = '\d{2}\.\d{2}\.\d{4}'
